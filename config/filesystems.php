@@ -44,6 +44,20 @@ return [
             'throw' => false,
         ],
 
+        'todos' => [
+            'driver' => 'local',
+            'root' => storage_path('app/todos'),
+            'url' => env('APP_URL').'/todos',
+            'visibility' => 'public',
+        ],
+
+        'avatar' => [
+            'driver' => 'local',
+            'root' => storage_path('app/avatar'),
+            'url' => env('APP_URL').'/avatar',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -71,6 +85,8 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('todos') => storage_path('app/todos'),
+        public_path('avatar') => storage_path('app/avatar'),
     ],
 
 ];

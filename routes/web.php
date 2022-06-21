@@ -22,7 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('tarefas', Todo::class)->name('todo');
+    Route::get('tarefas/{id?}', Todo::class)->name('todo');
 });
 
 require __DIR__.'/auth.php';

@@ -1,12 +1,15 @@
-<x-app-layout>
+<div>
     <x-slot:header>
         <div class="flex justify-between items-center">
             <h1>Viualização de uma tarefa</h1>
-            <x-button-link href="{{ route('tarefas.index') }}">Voltar</x-button-link>
         </div>
-        </x-slot>
+    </x-slot>
 
         <x-container class="mt-4">
+            <div class="flex justify-end">
+                <x-button-link href="{{ route('todo') }}">Voltar</x-button-link>
+            </div>
+
             <div class="mt-4">
                 <div class="flex justify-center">
                     <div class="rounded-lg shadow-lg bg-white max-w-sm">
@@ -35,16 +38,14 @@
                             @endif
                             @if (!empty($todo->cost))
                                 <p>
-                                    <strong class="text-gray-900">Custo: </strong>
+                                    <strong class="text-gray-900">Custo: R$</strong>
                                     {{  $todo->cost_formated }}
                                 </p>
                             @endif
                             <p class="text-gray-700 text-base mb-4 max-w-[20rem] min-w-[20rem]">
                                 {{ $todo->description }}
                             </p>
-                            <form action="{{ route('tarefas.checkbox', $todo->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
+                            <form>
                                 <input type="hidden" name="completed" value="{{ $todo->completed ? null : 'on' }}">
                                 <x-button
                                     class=" bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  active:bg-blue-800">
@@ -56,4 +57,4 @@
                 </div>
             </div>
         </x-container>
-</x-app-layout>
+</div>

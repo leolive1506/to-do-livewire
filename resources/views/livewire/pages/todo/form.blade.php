@@ -1,48 +1,45 @@
-<x-app-layout>
+<div>
     <x-slot:header>
         <div class="flex justify-between items-center">
             <h1>{{ empty($todo->id) ? 'Nova tarefas' : 'Editar tarefa' }}</h1>
-            <x-button-link href="{{ route('tarefas.index') }}">Voltar</x-button-link>
         </div>
     </x-slot>
 
     <x-container class="mt-4">
-        <form action="{{ empty($todo->id) ? route('tarefas.store') : route('tarefas.update', $todo->id) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @if (!empty($todo->id))
-                @method('PUT')
-            @endif
-
+        <div class="flex justify-end">
+            <x-button-link href="{{ route('todo') }}">Voltar</x-button-link>
+        </div>
+        <form wire:submit.prevent='save'>
             <div class="mt-4">
                 <x-label for="name" :value="__('Nome')" />
-                <x-input name="name" value="{{ old('name', $todo->name ?? null) }}" />
-                @error('name')
+                <x-input name="name" wire:model.debouce="todo.name" />
+                @error('todo.name')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mt-4">
                 <x-label for="cost" :value="__('Custo (opcional)')" />
-                <x-input-prepend name="cost" value="{{ old('cost', $todo->cost ?? null) }}" />
-                @error('cost')
+                <input class='money-mask' type="text" name='cost' wire:ignore wire:model.defer='todo.cost' placeholder="your cost">
+                @error('todo.cost')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mt-4">
                 <x-label for="remember_at" :value="__('Lembrar-me em (opcional)')" />
-                <x-input type="date" name="remember_at" value="{{ old('remember_at', $todo->remember_at ?? null) }}" />
-                @error('remember_at')
+                <x-input type="date" name="remember_at" wire:model.debouce="todo.remember_at" />
+                @error('todo.remember_at')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mt-4">
                 <x-label for="description" :value="__('Descrição')" />
-                <x-textarea name="description" value="{{ old('description', $todo->description ?? null) }}" />
-                @error('description')
+                <x-textarea name="description" wire:model.debouce="todo.description" />
+                @error('todo.description')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
             <div class="my-4">
-                <x-input-file name="file" />
+                <x-input-file name="file" wire:model.debounce="file" />
                 @error('file')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
@@ -52,7 +49,5 @@
             </div>
         </form>
     </x-container>
-    <script>
 
-    </script>
-</x-app-layout>
+</div>
